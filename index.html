@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mess Food Donation</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+    header { background: #4CAF50; color: white; padding: 15px; text-align: center; }
+    .container { width: 90%; max-width: 900px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #333; }
+    label { display: block; margin: 10px 0 5px; }
+    input, textarea, button, select { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background: #45a049; }
+    .donations { margin-top: 30px; }
+    .donation-item { background: #eafbea; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+    nav { background: #333; color: white; padding: 10px; text-align: center; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    nav a:hover { text-decoration: underline; }
+    iframe { width: 100%; height: 300px; border-radius: 8px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mess Food Donation Platform</h1>
+    <p>Donate leftover food from mess to NGOs</p>
+  </header>  <nav>
+    <a href="#donate">Donate Food</a>
+    <a href="#donations">Available Donations</a>
+    <a href="#ngoLogin">NGO Login</a>
+  </nav>  <div class="container" id="donate">
+    <h2>Donate Food</h2>
+    <form id="donationForm">
+      <label>Mess / Hostel Name:</label>
+      <input type="text" id="messName" required><label>Food Details:</label>
+  <textarea id="foodDetails" required></textarea>
+
+  <label>Quantity (Approx):</label>
+  <input type="text" id="quantity" required>
+
+  <label>Pickup Location:</label>
+  <input type="text" id="location" placeholder="Enter address" required>
+
+  <label>Pickup Time:</label>
+  <input type="time" id="pickupTime" required>
+
+  <button type="submit">Submit Donation</button>
+</form>
+
+<div class="donations" id="donations">
+  <h2>Available Donations</h2>
+  <div id="donationList"></div>
+</div>
+
+  </div>  <div class="container" id="ngoLogin">
+    <h2>NGO Login</h2>
+    <form id="ngoForm">
+      <label>NGO Name:</label>
+      <input type="text" id="ngoName" required><label>Email:</label>
+  <input type="email" id="ngoEmail" required>
+
+  <label>Password:</label>
+  <input type="password" id="ngoPassword" required>
+
+  <button type="submit">Login</button>
+</form>
+<p id="ngoMessage"></p>
+
+  </div>  <script>
+    const form = document.getElementById('donationForm');
+    const donationList = document.getElementById('donationList');
+    const ngoForm = document.getElementById('ngoForm');
+    const ngoMessage = document.getElementById('ngoMessage');
+
+    // NGO login simulation
+    ngoForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const ngoName = document.getElementById('ngoName').value;
+      ngoMessage.innerText = `Welcome, ${ngoName}! You can now view and claim donations.`;
+      ngoForm.reset();
+    });
+
+    // Donation submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const messName = document.getElementById('messName').value;
+      const foodDetails = document.getElementById('foodDetails').value;
+      const quantity = document.getElementById('quantity').value;
+      const location = document.getElementById('location').value;
+      const pickupTime = document.getElementById('pickupTime').value;
+
+      const donationItem = document.createElement('div');
+      donationItem.classList.add('donation-item');
+      donationItem.innerHTML = `<strong>${messName}</strong><br>
+                                Food: ${foodDetails}<br>
+                                Quantity: ${quantity}<br>
+                                Location: ${location}<br>
+                                Pickup Time: ${pickupTime}
+                                <br><iframe src="https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed"></iframe>`;
+
+      donationList.appendChild(donationItem);
+      form.reset();
+    });
+  </script></body>
+</html>
